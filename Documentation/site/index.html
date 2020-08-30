@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Bibliothèque</title>
+        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href=".">Bibliothèque</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#a-propos">À propos</a></li>
+        <li class="main "><a href="#generalites">Généralités</a></li>
+        <li class="main "><a href="#installation">Installation</a></li>
+        <li class="main "><a href="#authentification">Authentification</a></li>
+        <li class="main "><a href="#droits">Droits</a></li>
+        <li class="main "><a href="#auteurs">Auteurs</a></li>
+            <li><a href="#obtenir-tout-les-auteurs-get-apiauthors">Obtenir tout les auteurs GET /api/authors</a></li>
+            <li><a href="#obtenir-un-auteur-get-apiauthorsidentifiant-author">Obtenir un auteur GET /api/authors/{identifiant author}</a></li>
+            <li><a href="#creer-un-nouvel-auteur-post-apiauthors">Créer un nouvel auteur POST /api/authors</a></li>
+            <li><a href="#modifier-un-auteur-existant-put-apiauthorsidentifiant-author">Modifier un auteur existant PUT /api/authors/{identifiant author}</a></li>
+            <li><a href="#supprimer-un-auteur-put-apiauthorsidentifiant-author">Supprimer un auteur PUT /api/authors/{identifiant author}</a></li>
+        <li class="main "><a href="#livres">Livres</a></li>
+            <li><a href="#obtenir-tout-les-livres-get-apibooks">Obtenir tout les livres GET /api/books</a></li>
+            <li><a href="#obtenir-un-livre-get-apibooksisbn-livre">Obtenir un livre GET /api/books/{isbn livre}</a></li>
+            <li><a href="#creer-un-nouvel-livre-post-apibooks">Créer un nouvel livre POST /api/books</a></li>
+            <li><a href="#modifier-un-livre-existant-put-apibooksidentifiant-author">* Modifier un livre existant PUT /api/books/{identifiant author}</a></li>
+            <li><a href="#supprimer-un-livre-put-apiauthorsisbn">* Supprimer un livre PUT /api/authors/{isbn}</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="a-propos">À propos</h2>
+<p>Biliothèque est un projet d'API rest réalisé dans le cadre de la licence professionnel CODESI.</p>
+<h2 id="generalites">Généralités</h2>
+<ul>
+<li>
+<p>Toutes les requêtes sont construites comme suivant:</p>
+<p>VERBE /api/[ressource]/[identifiant de ressource]</p>
+</li>
+<li>
+<p>Les paramètres (en dehors de l'identifiant de la ressource qui se trouve directement dans l'adresse) sont passés dans le body de la requête</p>
+</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>Prérequis: pour installer cette API vous devez préalablement disposé d'un moteur de base de données ainsi qu'une version récente de nodeJS</li>
+<li>Executez le script de création de base de données (database.sql) fourni dans votre moteur de bases de données</li>
+<li>(optionnel) Executez le script d'insértion de jeu d'essai dans votre base de données</li>
+<li>Executez la commande <code>npm install</code> dans le répertoire Application pour installer les dépendances.</li>
+<li>Lancer le serveur en executant la commande <code>node serveur.js</code></li>
+</ul>
+<h2 id="authentification">Authentification</h2>
+<p>Cette API utilise le standart <a href="https://jwt.io/introduction/">JWT</a> pour assurer l'authentification des utilisateurs.
+Une fois le jeton crée celui-ci doit être ajouté à l'entête HTTP Authorization avec le préfix Bearer comme suit par exemple:</p>
+<pre><code>Authorization: Bearer eyJhbGciOiJIUz9aH3IsInR5cCI6IkpPRMD
+</code></pre>
+<h2 id="droits">Droits</h2>
+<p>Toutes les requêtes necessitent d'<a href="auth.md">être authentifié</a>. Toutes les requêtes autre que GET nécessitent les droits d'administration.</p>
+<h2 id="auteurs">Auteurs</h2>
+<ul>
+<li>
+<h3 id="obtenir-tout-les-auteurs-get-apiauthors">Obtenir tout les auteurs <code>GET /api/authors</code></h3>
+</li>
+</ul>
+<p>Exemple de résultat:</p>
+<pre><code>[
+    {
+        "auteurId":1,
+        "auteurNom":"JRR Tolkien"
+    },
+    {
+        "auteurId":2,
+        "auteurNom":"Victor Hugo"
+    }
+]
+</code></pre>
+<ul>
+<li>
+<h3 id="obtenir-un-auteur-get-apiauthorsidentifiant-author">Obtenir un auteur <code>GET /api/authors/{identifiant author}</code></h3>
+Exemple de résultat:<pre><code>{
+    "auteurId":1,
+    "auteurNom":"JRR Tolkien"
+}
+</code></pre>
+</li>
+<li>
+<h3 id="creer-un-nouvel-auteur-post-apiauthors">Créer un nouvel auteur <code>POST /api/authors</code></h3>
+<p>Exemple de paramètre <em>author</em>:</p>
+<pre><code>{
+    "auteurNom":"JRR Tolkien"
+}
+</code></pre>
+</li>
+</ul>
+<p>Exemple de résultat:</p>
+<pre><code>    {
+        "auteurId":1
+    }
+</code></pre>
+<ul>
+<li>
+<h3 id="modifier-un-auteur-existant-put-apiauthorsidentifiant-author">Modifier un auteur existant <code>PUT /api/authors/{identifiant author}</code></h3>
+Exemple de paramètre <em>author</em>:<pre><code>{
+    "auteurNom":"JRR Tolkien"
+}
+</code></pre>
+</li>
+<li>
+<h3 id="supprimer-un-auteur-put-apiauthorsidentifiant-author">Supprimer un auteur <code>PUT /api/authors/{identifiant author}</code></h3>
+<p><strong>Attention il s'agit d'une action irréversible, de plus tout les livres écrits par cet auteur seront eux aussi supprimés</strong></p>
+</li>
+</ul>
+<h2 id="livres">Livres</h2>
+<ul>
+<li>
+<h3 id="obtenir-tout-les-livres-get-apibooks">Obtenir tout les livres <code>GET /api/books</code></h3>
+</li>
+</ul>
+<p>Exemple de résultat:</p>
+<pre><code>[
+  {
+        "livreId": 1,
+        "livreISBN": "p9g58e437856",
+        "livreTitre": "Le seigneur des anneaux",
+        "livreAuteur": 1
+  },
+  {
+        "livreId": 2,
+        "livreISBN": "p9g58e437855",
+        "livreTitre": "Le silmarillon",
+        "livreAuteur": 1
+  },
+  {
+        "livreId": 3,
+        "livreISBN": "p9g58e437850",
+        "livreTitre": "Les misérables",
+        "livreAuteur": 2
+  },
+  {
+        "livreId": 4,
+        "livreISBN": "p9g58e437852",
+        "livreTitre": "Notre dame de Paris",
+        "livreAuteur": 2
+  }
+]
+</code></pre>
+<ul>
+<li>
+<h3 id="obtenir-un-livre-get-apibooksisbn-livre">Obtenir un livre <code>GET /api/books/{isbn livre}</code></h3>
+</li>
+</ul>
+<p>Exemple de résultat:</p>
+<pre><code>{
+    "livreId": 1,
+    "livreISBN": "p9g58e437856",
+    "livreTitre": "Le seigneur des anneaux",
+    "livreAuteur": 1
+}
+</code></pre>
+<ul>
+<li>
+<h3 id="creer-un-nouvel-livre-post-apibooks">Créer un nouvel livre <code>POST /api/books</code></h3>
+</li>
+</ul>
+<p>Exemple de paramètre <em>book</em>:</p>
+<pre><code>{
+    "livreISBN": "p9g58e437856",
+    "livreTitre": "Le seigneur des anneaux",
+    "livreAuteur": 1
+}
+</code></pre>
+<p>Exemple de résultat:</p>
+<pre><code>    {
+        "livreId": 1
+    }
+</code></pre>
+<h3 id="modifier-un-livre-existant-put-apibooksidentifiant-author">* Modifier un livre existant <code>PUT /api/books/{identifiant author}</code></h3>
+<p>Exemple de paramètre <em>book</em>:</p>
+<pre><code>    {
+        "livreTitre": "Le seigneur des anneaux",
+    }
+</code></pre>
+<h3 id="supprimer-un-livre-put-apiauthorsisbn">* Supprimer un livre <code>PUT /api/authors/{isbn}</code></h3>
+<p><strong>Attention il s'agit d'une action irréversible</strong></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-11-14 13:38:05
+-->

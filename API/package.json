@@ -1,0 +1,19 @@
+{
+  "name": "bibliotheque",
+  "version": "1.0.0",
+  "description": "Une API minimaliste de gestion de livres et d'auteurs",
+  "main": "serveur.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yann François et Michaël Vanlerberghe",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.0.0",
+    "package-lock.json": "^1.0.0",
+    "package.json": "^2.0.1",
+    "sequelize": "^5.21.1"
+  }
+}
